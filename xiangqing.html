@@ -64,6 +64,7 @@
             box-shadow: none;
         }
     </style>
+       <script src="./js/mock-2.js"></script>
 </head>
 
 <body>
@@ -105,40 +106,41 @@
     </div>
     <script src="./js/mock-2.js"></script>
     <script>
-$.ajax({
-    url:'http://api.hzbiz.net/0103/api/blogs.php ',
-    type:'get',
-    dataType:'json',
-    success:function(data){
-        $.each(data.blogs,function (index,value) { 
-     var text=`
-     <div class="box">
+
+        $.get("http://api.hzbiz.net/0103/api/blogs.php",{
+            id:getUrlName().id
+        },function (res) { 
+            
+            let data = JSON.parse(res)
+               var element=data.blogs[0]
+                var text=`
+                <div class="box">
                 <div class="col-md-4">
                     <img src="./img/heade.jpeg" class=" img-thumbnail">
                 </div>
                 <div class="col-md-8">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h2><a href="xiangqing.html?id=${value.id}">${value.title}</a></h2>
+                        <h2><a href="xiangqing.html?id=${element.id}">${element.title}</a></h2>
                     </div>
                     <div class="panel-body">
-                    ${value.body}
+                    ${element.body}
                     </div>
                     <div class="panel-footer">
-                        <a href=""> ${value.body}</a>
-                        <a href=""> ${value.city}</a>
-                        <a href=""> ${value.ctime}</a>
+                        <a href=""> ${element.name}</a>
+                        <a href=""> ${element.city}</a>
+                        <a href=""> ${element.ctime}</a>
                     </div>
                 </div>
             </div>
         </div>
      `
      $("#box").append($(text))
-   })
-    }
-})
+           })
+           
     </script>
     <script src="./js/header.js"></script>
+
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,178 @@
     <link rel="stylesheet" href="./css/bootstrap.css">
     <script src="./js/jquery.js"></script>
     <script src="./js/bootstrap.js"></script>
+    <script type="text/javascript" src="./js/mock.js"></script>
+    <style>
+        body {
+            background: #f0f0f0;
+        }
+
+        .navbar-form {
+            position: relative;
+        }
+
+        [type=submit] {
+            padding: 0;
+            border: none;
+            background: rgba(0, 0, 0, 0);
+            position: absolute;
+            right: 25px;
+            top: 8px;
+        }
+
+        [type=submit]:hover {
+            background: rgba(0, 0, 0, 0);
+            outline: none;
+        }
+
+        [type=submit]:focus {
+            background: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            [type=submit] {
+                right: 25px;
+                top: 16px;
+            }
+        }
+
+        .user {
+            min-width: 250px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .header {
+            width: 100px;
+            margin:25px auto;
+        }
+        .box{
+            background: white;
+            overflow: hidden;
+            padding: 10px;
+        }
+        .panel-footer{
+            background: white;
+            border: none;
+            box-shadow: none;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>这是第一次提交</h1>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">菜鸟教程</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav  navbar-right">
+                    <li class="active"><a href="#">iOS</a></li>
+                    <li><a href="#">SVN</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><span
+                            class="glyphicon glyphicon-search"></span></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="user">
+                    <div class="header">
+                        <img src="./img/heade.jpeg" class="img-circle img-thumbnail">
+                    </div>
+                    <h4 class="text-center">陈立果</h4>
+                    <p class="col-md-12">Web前端开发工程师，主要职责是利用(X)HTML/CSS/JavaScript/Flash等各种Web技术进行客户端产品的开发。完成客户端程序（也就是浏览器端）的开发，开发JavaScript以及Flash模块，同时结合后台开发技术模拟整体效果，进行丰富互联网的Web开发，致力于通过技术改善用户体验。</p>
+                </div>
+            </div>
+            <div class="col-md-9" id="box">
+                <!-- <div class="box">
+                <div class="col-md-4">
+                    <img src="./img/heade.jpeg" class=" img-thumbnail">
+                </div>
+                <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading">
+                        7.1万亿元新增贷款投向了哪里？解读一季度金融数据
+                    </div>
+                    <div class="panel-body">
+                        一季度我国人民币贷款增加7.1万亿元，同比多增1.29万亿元，为疫情防控、企业复工复产提供了有力支持。新增贷款主要投向了哪里？货币政策传导效率如何？个人消费贷款可有改善？这些引起市场普遍关注。
+                    </div>
+                    <div class="panel-footer">
+                        <a href="">订阅</a>
+                        <a href="">关注</a>
+                        <a href="">说明</a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+            </div>
+        </div>
+    </div>
+    <script src="./js/mock-2.js"></script>
+    <script>
+$.ajax({
+    url:'http:www.clg.com',
+    type:'get',
+    dataType:'json',
+    success:function(data){
+        $.each(data.result,function (index,value) { 
+     
+     var text=`
+     <div class="box">
+                <div class="col-md-4">
+                    <img src="./img/heade.jpeg" class=" img-thumbnail">
+                </div>
+                <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading">
+                      ${value.title}
+                    </div>
+                    <div class="panel-body">
+                    ${value.body}
+                    </div>
+                    <div class="panel-footer">
+                        <a href=""> ${value.name}</a>
+                        <a href=""> ${value.city}</a>
+                        <a href=""> ${value.ctime}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+     `
+     $("#box").append($(text))
+   })
+    }
+})
+  
+    </script>
 </body>
+
 </html>

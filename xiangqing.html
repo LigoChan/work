@@ -109,14 +109,14 @@
 
         $.get("http://api.hzbiz.net/0103/api/blogs.php",{
             id:getUrlName().id
-        },function (res) { 
-            
+        },function (res) {    
             let data = JSON.parse(res)
                var element=data.blogs[0]
+               console.log(element)
                 var text=`
                 <div class="box">
                 <div class="col-md-4">
-                    <img src="./img/heade.jpeg" class=" img-thumbnail">
+                    <img src="${element.url}" class=" img-thumbnail">
                 </div>
                 <div class="col-md-8">
                 <div class="panel">
@@ -127,7 +127,7 @@
                     ${element.body}
                     </div>
                     <div class="panel-footer">
-                        <a href=""> ${element.name}</a>
+                        <a href=""> ${element.username}</a>
                         <a href=""> ${element.city}</a>
                         <a href=""> ${element.ctime}</a>
                     </div>

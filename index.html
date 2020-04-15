@@ -110,11 +110,15 @@ $.ajax({
     type:'get',
     dataType:'json',
     success:function(data){
-        $.each(data.blogs,function (index,value) { 
+        let blog=data.blogs;
+        console.log(blog)
+        var blogReserve=blog.reverse()
+        $.each(blogReserve,function (index,value) { 
+           
      var text=`
      <div class="box">
                 <div class="col-md-4">
-                    <img src="./img/heade.jpeg" class=" img-thumbnail">
+                    <img src="${value.url}" class=" img-thumbnail">
                 </div>
                 <div class="col-md-8">
                 <div class="panel">
@@ -125,7 +129,8 @@ $.ajax({
                     ${value.body}
                     </div>
                     <div class="panel-footer">
-                        <a href=""> ${value.body}</a>
+                        <a href=""> ${value.typeclass}</a>
+                        <a href=""> ${value.username}</a>
                         <a href=""> ${value.city}</a>
                         <a href=""> ${value.ctime}</a>
                     </div>
@@ -137,6 +142,7 @@ $.ajax({
    })
     }
 })
+
     </script>
     <script src="./js/header.js"></script>
 </body>

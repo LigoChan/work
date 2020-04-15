@@ -22,7 +22,7 @@ const obj={
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="tijiao.html">写文章</a></li>
-                            <li><a href="#">EJB</a></li>
+                            <li><a href="addType.html">添加分类</a></li>
                             <li><a href="#">Jasper Report</a></li>
                             <li class="divider"></li>
                             <li><a href="#">分离的链接</a></li>

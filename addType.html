@@ -41,7 +41,9 @@
                     <div id="myAlert">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
                     </div>
-                    <button type="submit" class="btn btn-default">提交</button>
+                    <button type="submit" class="btn btn-default submit">提交</button>
+                    <button type="submit" class="btn btn-default update" style="display: none;">修改</button>
+                    <!-- <button type="button" class="btn btn-danger" id="delAll">一键删除</button> -->
                 </form>
             </div>
         </div>
@@ -65,37 +67,113 @@
     <script src="../js/header.js"></script>
 
     <script>
-        $('#postClass').on('submit', function (e) {
-            e.preventDefault();
-            $.post('http://api.hzbiz.net/0103/api/postClass.php', {
+        $('#postClass').on('click','button', function (e) {
+            let url;
+            if($(this).text()=='提交'){
+                url='http://api.hzbiz.net/0103/api/postClass.php'
+                  $.post(url, {
                 typeClass: $('[name="typeClass"]').val()
             }, function (res) {
                 if (res.isCheck) {
                     $('#myAlert').addClass('alert alert-success')
                     $('#myAlert').html('<strong>' + res.msg + '</strong>')
-                    console.log(res)
                     if(res.isCheck){
                         getType()
                     }
+                }else{
+                    $('#myAlert').addClass('alert alert-success')
+                    $('#myAlert').html('<strong>' + res.msg + '</strong>')
                 }
             }, 'json')
+            }else{
+                url='http://api.hzbiz.net/0103/api/editClass.php'
+                $.post(url, {
+                typeClass: $('[name="typeClass"]').val(),
+                editID:$(this).attr('data-id')
+            }, function (res) {
+                if (res.isCheck) {
+                    $('#myAlert').addClass('alert alert-success')
+                    $('#myAlert').html('<strong>' + res.msg + '</strong>')
+                    if(res.isCheck){
+                        getType()
+                    }
+                }else{
+                    $('#myAlert').addClass('alert alert-success')
+                    $('#myAlert').html('<strong>' + res.msg + '</strong>')
+                }
+            }, 'json')
+            }
+            console.log(url)
+            // e.preventDefault();
+          
         })
       function getType() { 
-          let tr=''
+        
         $.get('http://api.hzbiz.net/0103/api/typeClass.php', function (res) {
                var valueClass=JSON.parse(res)
             $.each(valueClass.typeClass, function (index, value) {
                 var tr = `
                 <tr>   
-            <td>${value.id}</td>
+                <td>${value.id}</td>
               <td>${value.typeclass}</td>    
-             <td>修改 | 删除</td>    
+             <td><button type="button" class="btn btn-danger" data-id="${value.id}">删除</button>
+                <button type="button" class="btn btn-primary updataBtn" data-type="${value.typeclass}" data-id="${value.id}">修改</button> 
+                </td>    
         </tr>     `
             $('#tbody').append(tr)
             })
         })
        }
        getType()
+       $('tbody').on('click','button',function (res) { 
+           var id=$(this).attr('data-id')
+           if($(this).text()=='删除'){
+              
+               $.get('http://api.hzbiz.net/0103/api/removeTypeClass.php',{removeID:id},function (res) { 
+                console.log(res)
+               if(res.ischeck){
+                $(this).parents('tr').remove()  
+                $('#myAlert').addClass('alert alert-success')
+                    $('#myAlert').html('<strong>' + res.msg + '</strong>')
+               }else{
+                $('#myAlert').addClass('alert alert-success')
+                $('#myAlert').html('<strong>' + res.msg + '</strong>')
+               }
+                },'json')
+           }else if($(this).text()=='修改'){
+            // 
+
+            $(".page-header").html("修改"+$(this).attr('data-type')+"类名")
+            $('.submit').remove()
+            $('.update').css('display','block')
+            $('.update').attr('data-id',id)
+            $('[name=typeClass]').val($(this).attr('data-type'))
+           }
+        })
+        
+
+
+        // function delValue() {   
+        //     var id=$(this).attr('data-id')
+        //        $.get('http://api.hzbiz.net/0103/api/removeTypeClass.php',{removeID:id},function (res) { 
+        //         if(res.ischeck){
+        //         $(this).parents('tr').remove()  
+        //     }
+        //         },'json')
+        //  }
+        //  function delAll() { 
+        //     $('#delAll').on('click',function () { 
+        //         $.get('http://api.hzbiz.net/0103/api/typeClass.php',function (res) {
+        //           var resValue=$.parseJSON(res)
+        //           console.log(resValue)
+        //           $.each(resValue.typeClass,function (index,value) { 
+        //            })
+        //           })
+        //      })
+        //   }
+        //   delAll()
+       
+
     </script>
 </body>
 

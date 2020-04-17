@@ -100,6 +100,7 @@
                 </div>
             </div>
         </div> -->
+        
             </div>
         </div>
     </div>
@@ -111,10 +112,7 @@ $.ajax({
     dataType:'json',
     success:function(data){
         let blog=data.blogs;
-        console.log(blog)
-        var blogReserve=blog.reverse()
-        $.each(blogReserve,function (index,value) { 
-           
+        $.each(blog,function (index,value) { 
      var text=`
      <div class="box">
                 <div class="col-md-4">
@@ -126,13 +124,15 @@ $.ajax({
                         <h2><a href="xiangqing.html?id=${value.id}">${value.title}</a></h2>
                     </div>
                     <div class="panel-body">
-                    ${value.body}
+                    ${value.body.replace(/<[^<>]+?/,'')}
                     </div>
                     <div class="panel-footer">
                         <a href=""> ${value.typeclass}</a>
                         <a href=""> ${value.username}</a>
                         <a href=""> ${value.city}</a>
                         <a href=""> ${value.ctime}</a>
+                        <a href="" data-del="${value.id}" id="deleteBlog">删除</a>
+                        <a href="" data-delAll="" id="deleteBlogAll">一键删除</a>
                     </div>
                 </div>
             </div>
@@ -140,9 +140,37 @@ $.ajax({
      `
      $("#box").append($(text))
    })
+   function delAll() { 
+        $('#deleteBlog').on('click',function (e) { 
+        e.preventDefault()
+        var id=$('#deleteBlog').attr('data-del')
+        if($(this).text()=='删除'){
+           $.get('http://api.hzbiz.net/0103/api/deleteBlog.php?',{id,id},function (res) { 
+            if(res.isCheck){
+                $('#deleteBlog').parents('.class').remove()
+            }
+           alert(res.msg)
+            },'json')
+        }
+     })
+    }
+    delAll()
+     $('#deleteBlogAll').on('click',function (e) { 
+        e.preventDefault()
+        $.get('http://api.hzbiz.net/0103/api/blogs.php ',function (result) { 
+         $.each(result.blogs,function (res,value) { 
+             var id=value.id
+            $.get('http://api.hzbiz.net/0103/api/deleteBlog.php?',{id,id},function (res) { 
+            if(res.isCheck){
+                $('#deleteBlog').parents('.class').remove()
+            }
+           alert(res.msg)
+            },'json')
+          })
+         },'json')
+      })
     }
 })
-
     </script>
     <script src="./js/header.js"></script>
 </body>

@@ -69,10 +69,6 @@
                                 <input type="text" class="form-control" name="username" placeholder="作者">
                             </div>
                             <div class="col-md-4">
-                                <label for="name">发布时间</label>
-                                <input type="datetime-local" class="form-control" name="ctime" placeholder="时间">
-                            </div>
-                            <div class="col-md-4">
                                 <label for="name">发布者的城市</label>
                                 <input type="text" class="form-control" name="city" placeholder="城市">
                             </div>
@@ -108,7 +104,6 @@
             $.post('http://api.hzbiz.net/0103/api/postNews.php ', {
                 title: $('[name="title"]').val(),
                 body: $('[name="body"]').val(),
-                ctime: $('[name="ctime"]').val(),
                 city: $('[name="city"]').val(),
                 username: $('[name="username"]').val(),
                 url: $('#hidden').val(),
@@ -121,6 +116,9 @@
                     setInterval(function () { 
                         location.href='./index.html'
                      },5000)
+                }else{
+                    $('#myAlert').addClass('alert alert-success')
+                    $('#myAlert').html('<strong>'+res.msg+'</strong>')
                 }
             },'json')
         })

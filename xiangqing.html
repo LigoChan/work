@@ -51,24 +51,26 @@
 
         .header {
             width: 100px;
-            margin:25px auto;
+            margin: 25px auto;
         }
-        .box{
+
+        .box {
             background: white;
             overflow: hidden;
             padding: 10px;
         }
-        .panel-footer{
+
+        .panel-footer {
             background: white;
             border: none;
             box-shadow: none;
         }
     </style>
-       <script src="./js/mock-2.js"></script>
+    <script src="./js/mock-2.js"></script>
 </head>
 
 <body>
-   <header id="header"></header>
+    <header id="header"></header>
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -77,7 +79,9 @@
                         <img src="./img/heade.jpeg" class="img-circle img-thumbnail">
                     </div>
                     <h4 class="text-center">陈立果</h4>
-                    <p class="col-md-12">Web前端开发工程师，主要职责是利用(X)HTML/CSS/JavaScript/Flash等各种Web技术进行客户端产品的开发。完成客户端程序（也就是浏览器端）的开发，开发JavaScript以及Flash模块，同时结合后台开发技术模拟整体效果，进行丰富互联网的Web开发，致力于通过技术改善用户体验。</p>
+                    <p class="col-md-12">
+                        Web前端开发工程师，主要职责是利用(X)HTML/CSS/JavaScript/Flash等各种Web技术进行客户端产品的开发。完成客户端程序（也就是浏览器端）的开发，开发JavaScript以及Flash模块，同时结合后台开发技术模拟整体效果，进行丰富互联网的Web开发，致力于通过技术改善用户体验。
+                    </p>
                 </div>
             </div>
             <div class="col-md-9" id="box">
@@ -107,13 +111,16 @@
     <script src="./js/mock-2.js"></script>
     <script>
 
-        $.get("http://api.hzbiz.net/0103/api/blogs.php",{
-            id:getUrlName().id
-        },function (res) {    
+        $.post("http://api.hzbiz.net/0103/api/blogs.php", {
+            id: getUrlName().id
+        }, function (res) {
             let data = JSON.parse(res)
-               var element=data.blogs[0]
-               console.log(element)
-                var text=`
+            // var element = data.blogs[0]
+            var element = data.blogs
+            console.log(element)
+            $.each(element, function (index, element) {
+                if (getUrlName().id == element.id) {
+                    var text = `
                 <div class="box">
                 <div class="col-md-4">
                     <img src="${element.url}" class=" img-thumbnail">
@@ -121,7 +128,7 @@
                 <div class="col-md-8">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h2><a href="xiangqing.html?id=${element.id}">${element.title}</a></h2>
+                        <h2><a href=""?id=${element.id}">${element.title}</a></h2>
                     </div>
                     <div class="panel-body">
                     ${element.body}
@@ -135,9 +142,11 @@
             </div>
         </div>
      `
-     $("#box").append($(text))
-           })
-           
+                    $("#box").append($(text))
+                }
+            }
+            )
+        })
     </script>
     <script src="./js/header.js"></script>
 
